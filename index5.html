@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương 3 - So Sánh Cơ Chế Chiếu Soi Trực Giác Trí Tuệ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng Ngôi sao Vũ trụ */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Tinh vân Vũ trụ */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nebula-1 {
+            top: -10%;
+            left: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, #6366f1, #3b82f6, transparent);
+        }
+
+        .nebula-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 65vw;
+            height: 65vw;
+            background: radial-gradient(circle, #8b5cf6, #ec4899, transparent);
+        }
+
+        /* Container Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 1;
+            max-width: 920px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+                        0 0 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.45;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.25rem;
+            color: #38bdf8;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            line-height: 1.5;
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            color: #f1f5f9;
+            margin: 1.25rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .paragraph {
+            font-size: 1.02rem;
+            line-height: 1.85;
+            color: #cbd5e1;
+            margin-bottom: 1.25rem;
+            text-align: justify;
+        }
+
+        .paragraph sup {
+            color: #38bdf8;
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-left: 2px;
+        }
+
+        /* Visual Flowchart / Comparison Box */
+        .diagram-box {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin: 1.75rem 0;
+            box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.05);
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #a855f7;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(168, 85, 247, 0.3);
+        }
+
+        .flow-node {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .node-item {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .node-name {
+            font-weight: 700;
+            color: #fbbf24;
+            font-size: 0.95rem;
+        }
+
+        .node-desc {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Step List */
+        .step-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.25rem;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.65rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-size: 0.98rem;
+        }
+
+        .step-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #818cf8;
+            font-size: 0.8rem;
+            top: 0.15rem;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.9);
+            color: #38bdf8;
+            font-weight: 700;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tr:hover {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        /* Footnotes Section */
+        .footnotes {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footnotes-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 1.25rem;
+        }
+
+        .footnote-item {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: #94a3b8;
+            margin-bottom: 0.85rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+
+        .footnote-item .num {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.75rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            h2 {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="badge">Tiểu Luận K10</span>
+            <h1>CHƯƠNG 3: SO SÁNH CƠ CHẾ CHIẾU SOI CỦA TRỰC GIÁC TRÍ TUỆ GIỮA ADVAITA VEDĀNTA VÀ THIỀN HỌC THÍCH THANH TỪ</h1>
+        </div>
+
+        <!-- 3.1 -->
+        <h2>3.1. Sự Tương Đồng Trong Cơ Chế Chiếu Soi Trực Giác: Tính Trực Tiếp, Vô Phân Biệt Và Khả Năng Làm Sụp Đổ Ảo Giác Vô Minh Ngay Hiện Tiền</h2>
+        <p class="paragraph">
+            Khi đặt hai hệ thống nhận thức luận giải thoát—lý thuyết Aparokṣānubhūti (Trực giác Chân lý Trực tiếp) trong Advaita Vedānta của đại sư Śaṅkarācārya và Tánh “Biết” chiếu soi qua bài kệ “Mộng” của Thiền sư Thích Thanh Từ—lên bàn cân đối sáng, điểm tương đồng nổi bật nhất chính là sự khẳng định vai trò tối thượng của Nhận thức Trực giác Trực tiếp trong việc làm sụp đổ hoàn toàn ảo giác Vô minh (Avidyā) ngay hiện tiền<sup>1,2,3,4b</sup>.
+        </p>
+
+        <!-- Diagram 1 -->
+        <div class="diagram-box">
+            <div class="diagram-title">SỰ TƯƠNG ĐỒNG VÀ PHÂN NGẢ TRONG CƠ CHẾ CHIẾU SOI TRỰC GIÁC</div>
+            <div class="flow-node">
+                <div class="node-item">
+                    <span class="node-name">Advaita Vedānta (Śaṅkarācārya):</span>
+                    <span class="node-desc">[Aparokṣānubhūti / Direct Intuition] ──► Trực nhận "Aham Brahmāsmi" ──► Triệt tiêu mộng Vyāvahārika (Bóc tách Pañca-kośa) (Sākṣin đứng ngoài Līlā)</span>
+                </div>
+                <div class="node-item" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.1);">
+                    <span class="node-name" style="color: #f472b6;">Thiền học Thích Thanh Từ (Bát-nhã):</span>
+                    <span class="node-desc" style="color: #e9d5ff;">[Tánh "Biết" chiếu soi hiện tiền] ──► "Biết được mộng" ──► "Dạo cảnh mộng" tự tại ("Biết vọng không theo") (Bồ-tát hạnh "Vô sở trụ")</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>a. Tính trực tiếp không qua trung gian (Immediate Direct Perception)</h3>
+        <ul class="step-list">
+            <li><strong>Bác bỏ vai trò cứu cánh của lý trí gián tiếp:</strong> Cả Śaṅkarācārya và Thiền sư Thích Thanh Từ đều thống nhất rằng suy luận lý trí, phân tích khái niệm hay sách vở kinh văn gián tiếp (Parokṣa-jñāna / Tự tưởng suy lường) chỉ đóng vai trò phương tiện hỗ trợ sơ khởi<sup>3,4b,12,17</sup>. Chúng không thể đưa tâm thức chạm tới Thực tại Tối hậu.</li>
+            <li><strong>Cơ chế chiếu soi trực tiếp hiện tiền:</strong> Cả hai hệ thống đều đòi hỏi một cuộc đột phá nhận thức luận: nhận thức bừng sáng trực tiếp hiện tiền (Immediate Intuition). Trực giác này vận hành độc lập, không qua vật trung gian logic hay sự can thiệp của cấu trúc tâm trí phân biệt nhị nguyên<sup>3,4b,12,17</sup>.</li>
+        </ul>
+
+        <h3>b. Tính chất Vô phân biệt (Nirvikalpa) vượt qua khái niệm ngôn từ</h3>
+        <ul class="step-list">
+            <li><strong>Không gán lăng kính nhị nguyên:</strong> Trực giác Aparokṣānubhūti hay Tánh "Biết" chiếu soi đều không phải là cái biết phân biệt của vọng thức (Vijñāna)<sup>3,4b</sup>. Nhận thức này không bị vây hãm bởi các gán tưởng khái niệm, không kẹt vào hai bờ đối lập (Đúng - Sai, Yêu - Ghét, Có - Không)<sup>3,4b</sup>.</li>
+            <li><strong>Ánh sáng tự tịnh linh sáng:</strong> Đó là năng lực tri giác linh sáng bản hữu, soi chiếu thực tại đúng như bản chất hiện tiền của nó<sup>3,4b,12,17</sup>.</li>
+        </ul>
+
+        <h3>c. Khả năng làm sụp đổ ảo giác ngay tức khắc</h3>
+        <ul class="step-list">
+            <li><strong>Vedānta (Sợi dây - Con rắn):</strong> Khoảnh khắc ngọn đèn trực giác Aparokṣānubhūti bừng thắp, cơ chế cưỡng gán áp đặt điên đảo Adhyāsa bị đập tan; con rắn ảo giác Māyā lập tức tiêu tan mà không cần xua đuổi, trả lại sợi dây thừng Bản thể Brahman nguyên vẹn.</li>
+            <li><strong>Thiền học Thích Thanh Từ (Mộng - Tỉnh):</strong> Ngay khoảnh khắc Tánh "Biết" chiếu soi nhận diện mộng niệm ("Biết được mộng"), khoảng cách nhận thức được thiết lập; mộng niệm không được nương theo lập tức tự sụp đổ và vỡ tan ("Mộng tan rồi"), cất lên nụ “Cười vỡ mộng” ngộ nhập giải thoát<sup>1,4b,17,20</sup>.</li>
+        </ul>
+
+        <!-- 3.2 -->
+        <h2>3.2. Sự Phân Ngả Triết Học Về Lập Trường Bản Thể Luận Và Định Hướng Hiện Sinh Nhập Thế</h2>
+        <p class="paragraph">
+            Mặc dù gặp nhau ở cơ chế chiếu soi trực giác trực tiếp, lập trường bản thể luận và định hướng nhập thế giữa hai hệ thống lại phân ngả vô cùng sắc nét<sup>2,3,4b,6</sup>:
+        </p>
+
+        <!-- Diagram 2 -->
+        <div class="diagram-box">
+            <div class="diagram-title">RANH GIỚI BẢN THỂ VÀ ĐỊNH HƯỚNG NHẬP THẾ GIỮA HAI HỆ THỐNG</div>
+            <ul class="step-list" style="margin-bottom: 0;">
+                <li>
+                    <strong>ADVAITA VEDĀNTA (ŚAṄKARĀCĀRYA):</strong><br>
+                    - Trực giác Aparokṣānubhūti ngộ nhập Đại ngã vĩnh cửu Nirguṇa Brahman (Aham Brahmāsmi).<br>
+                    - Triệt tiêu hoàn toàn cõi mộng Tục đế Vyāvahārika (Badhita). Bậc Jīvanmukta giữ vai chứng nhân tịch tịnh (Sākṣin), đứng ngoài trò kịch Līlā.
+                </li>
+                <li style="margin-top: 0.75rem;">
+                    <strong>THIỀN HỌC THÍCH THANH TỪ (BÁT-NHÃ):</strong><br>
+                    - Tánh "Biết" chiếu soi đứng vững trên tinh thần Tánh Không Vô ngã (Śūnyatā / Anātman).<br>
+                    - Không triệt tiêu Tục đế, mà chuyển hóa mộng cảnh thành môi trường "Dạo cảnh mộng" tự tại và dấn thân Bồ-tát hạnh "Vô sở trụ" ("Ghi lời mộng, Nhắn khách mộng").
+                </li>
+            </ul>
+        </div>
+
+        <h3>a. Trực giác ngộ nhập Đại ngã vĩnh cửu (Vedānta) đối sáng với Tánh "Biết" chiếu soi Tánh Không Vô ngã (Thiền học)</h3>
+        <ul class="step-list">
+            <li><strong>Advaita Vedānta (Śaṅkarācārya):</strong> Trực giác Aparokṣānubhūti bóc tách năm lớp vỏ bao bọc (Pañca-kośa) để đưa Chân ngã cá thể (Ātman) trở về hòa nhập trọn vẹn vào Đại ngã vĩnh cửu Nirguṇa Brahman qua mệnh đề đại ngôn <em>Aham Brahmāsmi</em> ("Ta chính là Brahman"). Đồng thời, trực giác Vedānta triệt tiêu hoàn toàn cõi mộng Tục đế Vyāvahārika (Badhita).</li>
+            <li><strong>Thiền học Thích Thanh Từ:</strong> Tánh "Biết" chiếu soi đứng vững trên nền tảng Tánh Không (Śūnyatā) và Vô ngã (Anātman)<sup>3,4b,20</sup>. Thiền sư không tìm kiếm một "Đại ngã" siêu hình hằng tồn, cũng không phủ định triệt tiêu thế giới thế tục. Mộng cảnh Tục đế vẫn vận hành theo quy luật Duyên khởi (Paṭiccasamuppāda); Tánh "Biết" nhận diện Tánh mộng ngay giữa lòng mộng cảnh, chuyển hóa cõi đời thành môi trường “Dạo cảnh mộng” tự tại hiện tiền<sup>1,3,4b,20</sup>.</li>
+        </ul>
+
+        <h3>b. Tịch tịnh Chứng nhân (Vedānta) đối sáng với Bồ-tát Hạnh dấn thân "Vô sở trụ" (Thiền học)</h3>
+        <ul class="step-list">
+            <li><strong>Vedānta (Jīvanmukta):</strong> Bậc ngộ đạo Jīvanmukta duy trì thái độ Sākṣin (chứng nhân tịch tịnh), đứng ngoài trò kịch Līlā thế gian, thụ động chờ đợi thể xác vật lý rã rượi.</li>
+            <li><strong>Thiền học Việt Nam:</strong> Từ nụ cười ngộ nhập "Cười vỡ mộng", Thiền sư mở ra chiều kích Bồ-tát hạnh dấn thân vô sở trụ<sup>3,4b,21</sup>. Bồ-tát mượn chính thứ ngôn ngữ huyễn mộng (“Ghi lời mộng”) làm chiếc cầu Phương tiện (Upāya) Bát-nhã để quay lại cất tiếng gọi thức tỉnh chúng sinh (“Nhắn khách mộng”)<sup>3,4b,21</sup>. Họ phụng sự hết lòng giữa cõi Tục đế nhưng giữ tâm hoàn toàn Vô sở trụ (theo Kinh Kim Cang)—sống thong dong, tự tại và an lạc ngay giữa lòng cõi thực<sup>1,3,4b,21</sup>.</li>
+        </ul>
+
+        <!-- 3.3 -->
+        <h2>3.3. Cấu Trúc Nhận Thức Luận Nhân - Quả: Phân Định Sắc Nét Avidyā (Vô Minh) Và Vipallāsa (Điên Đảo Vọng Tưởng) Để Bác Bỏ Hữu Quả Luận (Sātkāryavāda)</h2>
+        <p class="paragraph">
+            Một trong những đóng góp triết học đặc sắc nhất được phân tích sâu sắc trong chuỗi bài giảng nhằm bảo vệ tính thuần khiết Bát-nhã chính là cấu trúc Nhân - Quả<sup>4b,6</sup>:
+        </p>
+
+        <!-- Diagram 3 -->
+        <div class="diagram-box">
+            <div class="diagram-title">RANH GIỚI NHÂN - QUẢ TRONG NHẬN THỨC LUẬN BÁT-NHÃ</div>
+            <div class="flow-node">
+                <div class="node-item">
+                    <span class="node-name">VÔ MINH (Avidyā)</span>
+                    <span class="node-desc">(Mūla-kāraṇa / Nhân gốc ngầm rỉ) ──► Che lấp Tuệ giác bản hữu (Nơi phát khởi lậu hoặc Āsava)</span>
+                </div>
+                <div style="text-align: center; color: #a855f7; font-weight: bold;">│<br>▼</div>
+                <div class="node-item" style="border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.08);">
+                    <span class="node-name" style="color: #fbbf24;">ĐIÊN ĐẢO VỌNG TƯỞNG (Vipallāsa)</span>
+                    <span class="node-desc">(Phala / Kết quả sinh khởi trực tiếp) ──► Coi Mộng niệm là Chân ngã (Sự bám chấp & Khổ đau)</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>a. Sự phân định sắc nét trong Chú giải Nettipakaraṇa</h3>
+        <ul class="step-list">
+            <li><strong>Vô minh (Avidyā):</strong> Chú giải Nettipakaraṇa (Chỉ đạo luận) xác định Vô minh là Mūla-kāraṇa—nguyên nhân gốc rễ ngầm rỉ che lấp Tuệ giác Bát-nhã<sup>4b,6</sup>.</li>
+            <li><strong>Điên đảo Vọng tưởng (Vipallāsa):</strong> Được xác định là Phala—kết quả sinh khởi trực tiếp (gồm 4 điên đảo: nhìn vô thường tưởng là thường, nhìn vô ngã tưởng là ngã, nhìn khổ tưởng là lạc, nhìn bất tịnh tưởng là tịnh)<sup>4b,6</sup>.</li>
+        </ul>
+
+        <h3>b. Bác bỏ sai lầm Hữu quả luận (Sātkāryavāda) của các phái ngoại đạo</h3>
+        <ul class="step-list">
+            <li><strong>Sự lẫn lộn của Vedānta và Sāṃkhya:</strong> Trong Advaita Vedānta hay Sāṃkhya, các tư tưởng gia đồng nhất Vô minh (Avidyā) và Điên đảo vọng tưởng làm một. Việc này vi phạm nguyên tắc logic nhận thức luận: Đồng nhất Nhân với Quả (Identity of Cause and Fruit), rơi vào sai lầm Hữu quả luận (Sātkāryavāda)—coi "quả đã tiềm ẩn sẵn trong nhân"<sup>4b,6,18,88</sup>.</li>
+            <li><strong>Bản sắc Thiền học Thích Thanh Từ:</strong> Thiền sư giữ vững sự phân định này: Công phu Phản quang tự kỷ Bát-nhã ("Biết vọng không theo" / "Biết được mộng") can thiệp trực tiếp làm vỡ tan quả Vipallāsa (mộng niệm bám chấp); ngay khi quả điên đảo vọng tưởng sụp đổ ("Mộng tan rồi"), nhân Avidyā tận gốc rễ bị triệt tiêu, đưa tâm thức bừng tỉnh ngộ nhập Tánh giác hiện tiền ("Tỉnh cơn mộng")<sup>1,4b,6,17</sup>.</li>
+        </ul>
+
+        <!-- 3.4 -->
+        <h2>3.4. Bảng So Sánh Tổng Hợp Cơ Chế Chiếu Soi Trực Giác Giữa Advaita Vedānta Và Thiền Học Thích Thanh Từ</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tiêu chí So sánh</th>
+                        <th>Advaita Vedānta (Śaṅkarācārya)</th>
+                        <th>Thiền học Thích Thanh Từ (Kệ "Mộng")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Khái niệm Cốt tủy</strong></td>
+                        <td>Aparokṣānubhūti (Trực giác Chân lý Trực tiếp).</td>
+                        <td>Tánh "Biết" chiếu soi ("Biết được mộng").</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phương thức Tác động</strong></td>
+                        <td>Bóc tách Pañca-kośa, đập tan cơ chế Adhyāsa.</td>
+                        <td>Phản quang tự kỷ: "Biết vọng không theo".</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cơ chế Mộng niệm</strong></td>
+                        <td>Con rắn ảo giác biến mất khi nhận ra dây thừng.</td>
+                        <td>Chỉ cần "Biết" là mộng tự tan ("Mộng tan rồi").</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lập trường Bản thể</strong></td>
+                        <td>Trực nhận Đại ngã vĩnh cửu (Nirguṇa Brahman).</td>
+                        <td>Đứng vững trên Tánh Không Vô ngã (Śūnyatā / Anātman).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Số phận Cõi Mộng</strong></td>
+                        <td>Bị triệt tiêu hoàn toàn (Vyāvahārika Sublated).</td>
+                        <td>Chuyển hóa thành môi trường "Dạo cảnh mộng" tự tại.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cấu trúc Nhân - Quả</strong></td>
+                        <td>Đồng nhất Vô minh và Ảo ảnh ➔ Lỗi Sātkāryavāda.</td>
+                        <td>Phân định Avidyā (Nhân) và Vipallāsa (Quả).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Thái độ Nhập thế</strong></td>
+                        <td>Bậc Jīvanmukta tịch tịnh chứng nhân (Sākṣin).</td>
+                        <td>Bồ-tát hạnh "Vô sở trụ" ("Ghi lời, Nhắn khách").</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FOOTNOTES SECTION -->
+        <div class="footnotes">
+            <div class="footnotes-header">CHÚ THÍCH & TRÍCH DẪN NGUỒN (CHƯƠNG 3)</div>
+
+            <div class="footnote-item">
+                <span class="num">22.</span> Radhakrishnan, S. (1999), <em>Indian Philosophy</em>, Vol. 2, Oxford University Press, New Delhi, tr. 480–495; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">23.</span> Thích Chơn Thiện (1999), <em>Pāli Phật học Đại cương</em>, NXB Tôn Giáo, Hà Nội, tr. 84–96; đối chiếu bài giảng "4b. Buổi học ngày 23-9-2026.mp3" [passage 178, 179, 304, 328, 353, 356] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 176, 177, 191, 192] (Phân định ranh giới giữa Vô minh Avidyā làm nhân gốc ngầm rỉ Mūla-kāraṇa và Điên đảo vọng tưởng Vipallāsa làm quả sinh khởi Phala; phê bình việc đồng nhất hai khái niệm dẫn đến Hữu quả luận Sātkāryavāda).
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">24.</span> Thiền sư Thích Thanh Từ (2005), <em>Thiền sư Việt Nam</em>, NXB Tôn Giáo, Hà Nội, tr. 120–125; đối chiếu bài giảng "3. Buổi học ngày 21-9-2026.mp3" [passage 210, 211, 212, 218] (Bản sắc Thiền Trúc Lâm Yên Tử, Tánh Không Bát-nhã và ý nghĩa Bồ-tát hạnh dấn thân "Ghi lời mộng, Nhắn khách mộng").
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">25.</span> Viện Triết học (2004), <em>Lịch sử Triết học Phương Đông</em>, NXB Chính trị Quốc gia, Hà Nội, tr. 335–340; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3] & "2. Buổi học ngày 16-9-2026.mp3" [passage 89, 90, 146] (Ý nghĩa nhận thức luận trực giác và Tánh "Biết" chiếu soi trong Thiền học).
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        const starCount = 120;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 2.5 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>

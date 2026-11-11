@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I. Mở Bài - Tiểu Luận K10</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng Ngôi sao Vũ trụ */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Tinh vân Vũ trụ */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nebula-1 {
+            top: -10%;
+            left: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, #6366f1, #3b82f6, transparent);
+        }
+
+        .nebula-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 65vw;
+            height: 65vw;
+            background: radial-gradient(circle, #8b5cf6, #ec4899, transparent);
+        }
+
+        /* Container Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+                        0 0 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .paragraph {
+            font-size: 1.05rem;
+            line-height: 1.85;
+            color: #cbd5e1;
+            margin-bottom: 1.75rem;
+            text-align: justify;
+        }
+
+        .paragraph sup {
+            color: #38bdf8;
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-left: 2px;
+        }
+
+        /* Bài kệ "Mộng" Box */
+        .poem-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(251, 191, 36, 0.05);
+            position: relative;
+        }
+
+        .poem-title {
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            color: #fbbf24;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .poem-lines {
+            font-family: 'Merriweather', serif;
+            font-size: 1.15rem;
+            line-height: 2;
+            color: #fef08a;
+            font-style: italic;
+        }
+
+        /* Thesis Box */
+        .thesis-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(168, 85, 247, 0.12));
+            border-left: 4px solid #a855f7;
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem 1.75rem;
+            margin: 2rem 0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #e9d5ff;
+            text-align: justify;
+        }
+
+        .thesis-title {
+            font-weight: 700;
+            color: #f472b6;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* Footnotes Section */
+        .footnotes {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footnotes-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footnote-item {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: #94a3b8;
+            margin-bottom: 0.85rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+
+        .footnote-item .num {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.75rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .paragraph {
+                font-size: 0.98rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="badge">Tiểu Luận K10</span>
+            <h1>I. MỞ BÀI</h1>
+        </div>
+
+        <p class="paragraph">
+            Trong lịch sử tư tưởng triết học và tâm lý học giải thoát phương Đông, câu hỏi về phương thức nhận thức rốt ráo để đập tan bóng tối Vô minh (Avidyā) và giải phóng con người khỏi giấc mộng luân hồi sinh tử luôn là vấn đề mang tính quyết định<sup>1</sup>. Toàn bộ các hệ thống suy luận lý trí, phân tích khái niệm và biện chứng ngôn từ—dù tinh vi và đồ sộ đến đâu—chỉ đóng vai trò như những ngón tay chỉ mặt trăng hay chiếc thuyền phương tiện để qua sông, hoàn toàn không thể chạm tới Thực tại Tối hậu<sup>2</sup>. Sự thức tỉnh giải thoát chân thật đòi hỏi một cuộc đột phá nhận thức luận: sự bừng sáng của Nhận thức Trực giác Trực tiếp (Aparokṣānubhūti / Darśana / Tánh "Biết" chiếu soi)—nơi nhận thức vượt lên trên mọi sự can thiệp của ý thức phân biệt nhị nguyên giữa Chủ thể và Đối tượng<sup>3</sup>. Nhờ năng lực chiếu soi trực tiếp không qua trung gian ấy, lăng kính ảo ảnh huyễn mộng lập tức tự sụp đổ, trả tâm thức về với sự tự tại và an lạc bản hữu.
+        </p>
+
+        <p class="paragraph">
+            Trong tòa nhà triết học Bất nhị (Advaita Vedānta), đại sư Śaṅkarācārya (Thương Yết La, 788–820) đã khẳng định rằng tri thức cứu cánh không thể đạt được bằng con đường gián tiếp hay suy luận lý trí (Parokṣa-jñāna)<sup>2</sup>. Śaṅkarācārya xướng xuất học thuyết Aparokṣānubhūti (Trực giác Chân lý Trực tiếp)—trạng thái ngộ nhập trực nhận Bất nhị<sup>3</sup>. Aparokṣānubhūti là sự bừng sáng của Trí tuệ Jñāna hoàn toàn không qua trung gian suy niệm hay lập luận của tâm trí (Manas); hành giả trực nhận ngay hiện tiền sự đồng nhất tuyệt đối giữa Chân ngã cá thể (Ātman) và Bản thể Vũ trụ (Nirguṇa Brahman) qua mệnh đề đại ngôn kinh điển: <em>Aham Brahmāsmi</em> ("Ta chính là Brahman")<sup>3</sup>. Khoảnh khắc Aparokṣānubhūti hiển lộ, cơ chế áp đặt điên đảo Adhyāsa bị đập tan, con rắn ảo giác Māyā hoàn toàn tiêu tan, trả lại sợi dây thừng Bản thể nguyên vẹn; thế giới hiện tượng tương đối Vyāvahārika lập tức bị triệt tiêu, đưa hành giả đạt trạng thái Giải thoát đương sinh (Jīvanmukta)<sup>3</sup>.
+        </p>
+
+        <p class="paragraph">
+            Đối sáng với lý thuyết trực giác bản thể của Vedānta, Thiền sư Thích Thanh Từ trong dòng chảy Thiền học Trúc Lâm Yên Tử Việt Nam thời hiện đại đã đúc kết chìa khóa tu tập trực giác qua bài kệ “Mộng” nổi tiếng (sáng tác tại Thiền viện Chân Không, Bà Rịa - Vũng Tàu vào tháng 7 năm 1980)<sup>4</sup>:
+        </p>
+
+        <div class="poem-card">
+            <div class="poem-title">BÀI KỆ "MỘNG"</div>
+            <div class="poem-lines">
+                Gá thân mộng<br>
+                Dạo cảnh mộng<br>
+                Mộng tan rồi<br>
+                Cười vỡ mộng<br>
+                Ghi lời mộng<br>
+                Nhắn khách mộng<br>
+                Biết được mộng<br>
+                Tỉnh cơn mộng.
+            </div>
+        </div>
+
+        <p class="paragraph">
+            Nhìn từ lăng kính Thiền học Thích Thanh Từ, hạt nhân của sự giải thoát nằm trọn vẹn ở hai từ “Biết được mộng”<sup>4</sup>. Tánh “Biết” (Tánh giác bản hữu / Phật tánh) ở đây tuyệt đối không phải là cái biết phân biệt suy lường của vọng thức (Vijñāna), mà là năng lực chiếu soi linh sáng hằng có nơi mỗi chúng sinh<sup>5</sup>. Nhờ công phu Phản quang tự kỷ Bát-nhã ("Biết vọng không theo"), khi một mộng niệm hay bão cảm xúc khởi lên, hành giả không cần khởi tâm xua đuổi, không đè nén cũng không phân tích dài dòng<sup>5</sup>. Hành giả chỉ cần “Biết” nó là vọng, là mộng ("Biết được mộng"); ngay khoảnh khắc Tánh "Biết" chiếu soi, mộng niệm không được nương theo lập tức tự sụp đổ và vỡ tan ("Mộng tan rồi"), đưa tâm thức bừng tỉnh ngộ nhập Tánh giác hiện tiền ("Tỉnh cơn mộng")<sup>4,5</sup>.
+        </p>
+
+        <div class="thesis-box">
+            <div class="thesis-title">Luận đề chính của tiểu luận</div>
+            Cả khái niệm Aparokṣānubhūti trong Advaita Vedānta của Śaṅkarācārya và trạng thái "Biết được mộng" trong Thiền học Thích Thanh Từ đều khẳng định vai trò quyết định của Nhận thức Trực giác Trực tiếp (không qua trung gian suy luận nhị nguyên) trong việc làm sụp đổ ngay lập tức cơn mộng vô minh; nhưng nếu Aparokṣānubhūti của Vedānta là trực giác hòa nhập Chân ngã Ātman vào Đại ngã Nirguṇa Brahman và triệt tiêu cõi thế tục Vyāvahārika, thì Tánh "Biết" trong Thiền học Thích Thanh Từ lại là năng lực chiếu soi Tánh giác bản hữu dựa trên nền tảng Tánh Không Vô ngã (Śūnyatā / Anātman)—nơi chỉ cần "Biết" là mộng niệm tự tan mà không cần xua đuổi, chuyển hóa cõi mộng Tục đế thành môi trường dấn thân Bồ-tát hạnh vô sở trụ ("Dạo cảnh mộng - Ghi lời mộng").
+        </div>
+
+        <p class="paragraph">
+            Nhận thức luận Thiền học phân định sắc nét ranh giới giữa Vô minh (Avidyā - nguyên nhân gốc ngầm rỉ Mūla-kāraṇa) và Điên đảo Vọng tưởng (Vipallāsa - quả sinh khởi Phala), tuyệt đối không đồng nhất hai khái niệm để tránh sai lầm Hữu quả luận (Sātkāryavāda)<sup>6</sup>; từ đó khẳng định Tánh "Biết" là chìa khóa vàng vô giá cho con đường thực hành Thiền tông Việt Nam hiện đại<sup>5</sup>.
+        </p>
+
+        <!-- FOOTNOTES SECTION -->
+        <div class="footnotes">
+            <div class="footnotes-header">
+                <span>CHÚ THÍCH & TRÍCH DẪN NGUỒN</span>
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">1.</span> Lê Xuân Khoa (1972), <em>Nhập môn Triết học Ấn Độ</em>, NXB Trung tâm Học liệu Bộ Giáo dục, Sài Gòn, tr. 185–192; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3] (Phân tích khái niệm Darśana—trực giác chân lý trực tiếp) & "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">2.</span> Śaṅkarācārya, <em>Brahmasūtra-bhāṣya</em> (Chú giải Kinh Brahma), Adhyāya 1, Pāda 1; xem thêm Swami Gambhirananda (dịch) (1965), <em>Brahma Sutra Bhasya of Shankaracharya</em>, Advaita Ashrama, Kolkata, tr. 14–25; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">3.</span> Śaṅkarācārya, <em>Aparokṣānubhūti</em> (Trực giác Chân lý Trực tiếp), bản dịch tiếng Anh của Swami Vimuktananda (1938), Advaita Ashrama, Kolkata; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94, 95] & "3. Buổi học ngày 21-9-2026.mp3" [passage 210, 218].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">4.</span> Thiền sư Thích Thanh Từ (1980), Bài kệ "Mộng", khắc tại Thiền viện Chân Không, Bà Rịa - Vũng Tàu, sáng tác tháng 7/1980; đối chiếu bài giảng "3. Buổi học ngày 21-9-2026.mp3" [passage 210, 211, 212] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232, 274].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">5.</span> Thiền sư Thích Thanh Từ (1997), <em>Bí quyết tu thiền</em>, NXB Tôn Giáo, Hà Nội, tr. 35–48; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3, 9] (Phân tích công phu Phản quang tự kỷ, tông chỉ "Biết vọng không theo" và Tánh "Biết" chiếu soi).
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">6.</span> Thích Chơn Thiện (1999), <em>Pāli Phật học Đại cương</em>, NXB Tôn Giáo, Hà Nội, tr. 84–96; đối chiếu bài giảng "4b. Buổi học ngày 23-9-2026.mp3" [passage 356] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 197] (Phân định ranh giới giữa Vô minh Avidyā làm nhân gốc ngầm rỉ Mūla-kāraṇa và Điên đảo nhận thức Vipallāsa làm quả sinh khởi Phala, tránh sai lầm Sātkāryavāda).
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">7.</span> Thích Minh Châu (dịch) (2012), <em>Kinh Trung Bộ (Majjhima Nikāya)</em>, Kinh Tất Cả Lậu Hoặc (Sabbāsava Sutta, số 2), NXB Tôn Giáo, Hà Nội; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 9] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 198, 199, 273].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">8.</span> Radhakrishnan, S. (1999), <em>Indian Philosophy</em>, Vol. 2, Oxford University Press, New Delhi, tr. 480–485; đối chiếu bài giảng "2. Buổi học ngày 16-9-2026.mp3" [passage 89, 90] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">9.</span> Viện Triết học (2004), <em>Lịch sử Triết học Phương Đông</em>, NXB Chính trị Quốc gia, Hà Nội, tr. 330–335; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3] & "3. Buổi học ngày 21-9-2026.mp3" [passage 210, 218].
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        const starCount = 120;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 2.5 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>

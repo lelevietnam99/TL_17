@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Mục Tiểu Luận K10 - Trực Giác Trí Tuệ & Trạng Thái "Biết"</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng Ngôi sao Vũ trụ */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Tinh vân Vũ trụ */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nebula-1 {
+            top: -10%;
+            left: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, #6366f1, #3b82f6, transparent);
+        }
+
+        .nebula-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 65vw;
+            height: 65vw;
+            background: radial-gradient(circle, #8b5cf6, #ec4899, transparent);
+        }
+
+        /* Container Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+                        0 0 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 0.98rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* Nav List */
+        .nav-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.75rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            text-decoration: none;
+            color: #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #6366f1, #a855f7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            background: rgba(30, 41, 59, 0.85);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3),
+                        0 0 20px rgba(168, 85, 247, 0.15);
+        }
+
+        .nav-item:hover::before {
+            opacity: 1;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .item-number {
+            font-family: 'Merriweather', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            width: 36px;
+            height: 36px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .item-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .item-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+
+        .item-desc {
+            font-size: 0.88rem;
+            color: #94a3b8;
+        }
+
+        .arrow-icon {
+            color: #c084fc;
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .arrow-icon {
+            transform: translateX(5px);
+            color: #f472b6;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.75rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .nav-item {
+                padding: 1rem 1.25rem;
+            }
+            .item-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.95rem;
+            }
+            .item-title {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="badge">Tiểu Luận K10 - Tổng Hợp</span>
+            <h1>DANH MỤC NỘI DUNG TIỂU LUẬN</h1>
+            <p class="subtitle">Trạng thái "Biết" trong Thiền học Thích Thanh Từ và Trực giác Chân lý (Aparokṣānubhūti) trong Advaita Vedānta</p>
+        </div>
+
+        <div class="nav-grid">
+            <!-- index1.html -->
+            <a href="index1.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">1</div>
+                    <div class="item-text">
+                        <span class="item-title">Sườn Bài 17: Cấu Trúc Tổng Quan</span>
+                        <span class="item-desc">Trực giác Trí tuệ và Trạng thái "Biết" trong hai hệ thống triết học</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+
+            <!-- index2.html -->
+            <a href="index2.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">2</div>
+                    <div class="item-text">
+                        <span class="item-title">I. Mở Bài</span>
+                        <span class="item-desc">Đặt vấn đề, bối cảnh lịch sử, bài kệ "Mộng" và Luận đề chính của tiểu luận</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+
+            <!-- index3.html -->
+            <a href="index3.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">3</div>
+                    <div class="item-text">
+                        <span class="item-title">Chương 1: Khái Niệm Aparokṣānubhūti</span>
+                        <span class="item-desc">Trực giác trực tiếp của Śaṅkarācārya, bóc tách Pañca-kośa và triệt tiêu mộng Vyāvahārika</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+
+            <!-- index4.html -->
+            <a href="index4.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">4</div>
+                    <div class="item-text">
+                        <span class="item-title">Chương 2: Trạng Thái "Biết Được Mộng"</span>
+                        <span class="item-desc">Thiền học Thích Thanh Từ, Tánh "Biết" chiếu soi và cơ chế "Biết là mộng tự tan"</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+
+            <!-- index5.html -->
+            <a href="index5.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">5</div>
+                    <div class="item-text">
+                        <span class="item-title">Chương 3: So Sánh Cơ Chế Chiếu Soi</span>
+                        <span class="item-desc">Đối sáng sự tương đồng, phân ngả bản thể luận và định hướng nhập thế Bồ-tát hạnh</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+
+            <!-- index6.html -->
+            <a href="index6.html" class="nav-item">
+                <div class="item-info">
+                    <div class="item-number">6</div>
+                    <div class="item-text">
+                        <span class="item-title">III. Kết Bài & IV. Tài Liệu Tham Khảo</span>
+                        <span class="item-desc">Tổng kết kết quả nghiên cứu, chìa khóa vàng Thiền học và hồ sơ tài liệu tham khảo</span>
+                    </div>
+                </div>
+                <span class="arrow-icon">➔</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        const starCount = 120;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 2.5 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>

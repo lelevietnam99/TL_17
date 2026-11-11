@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương 1 - Khái Niệm Aparokṣānubhūti</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Hiệu ứng Ngôi sao Vũ trụ */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Tinh vân Vũ trụ */
+        .nebula {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nebula-1 {
+            top: -10%;
+            left: -10%;
+            width: 55vw;
+            height: 55vw;
+            background: radial-gradient(circle, #6366f1, #3b82f6, transparent);
+        }
+
+        .nebula-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 65vw;
+            height: 65vw;
+            background: radial-gradient(circle, #8b5cf6, #ec4899, transparent);
+        }
+
+        /* Container Glassmorphism */
+        .card {
+            position: relative;
+            z-index: 1;
+            max-width: 920px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 3.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6),
+                        0 0 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.3rem;
+            color: #38bdf8;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: #f1f5f9;
+            margin: 1.25rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+
+        .paragraph {
+            font-size: 1.02rem;
+            line-height: 1.85;
+            color: #cbd5e1;
+            margin-bottom: 1.25rem;
+            text-align: justify;
+        }
+
+        .paragraph sup {
+            color: #38bdf8;
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-left: 2px;
+        }
+
+        /* Custom Visual Flowchart Box */
+        .diagram-box {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 1.75rem;
+            margin: 1.75rem 0;
+            box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.05);
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #a855f7;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(168, 85, 247, 0.3);
+        }
+
+        .flow-node {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .node-item {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .node-name {
+            font-weight: 700;
+            color: #fbbf24;
+            font-size: 0.95rem;
+        }
+
+        .node-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .arrow-down {
+            color: #a855f7;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Step List */
+        .step-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.25rem;
+        }
+
+        .step-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.65rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-size: 0.98rem;
+        }
+
+        .step-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #818cf8;
+            font-size: 0.8rem;
+            top: 0.15rem;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: rgba(30, 41, 59, 0.9);
+            color: #38bdf8;
+            font-weight: 700;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tr:hover {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        /* Footnotes Section */
+        .footnotes {
+            margin-top: 3.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footnotes-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-bottom: 1.25rem;
+        }
+
+        .footnote-item {
+            font-size: 0.88rem;
+            line-height: 1.65;
+            color: #94a3b8;
+            margin-bottom: 0.85rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+
+        .footnote-item .num {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.75rem;
+            }
+            h1 {
+                font-size: 1.45rem;
+            }
+            h2 {
+                font-size: 1.15rem;
+            }
+            .node-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula nebula-1"></div>
+    <div class="nebula nebula-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="badge">Tiểu Luận K10</span>
+            <h1>CHƯƠNG 1: KHÁI NIỆM APAROKṢĀNUBHŪTI (TRỰC GIÁC TRỰC TIẾP) CỦA ŚAṄKARĀCĀRYA</h1>
+        </div>
+
+        <!-- 1.1 -->
+        <h2>1.1. Phân Định Nhận Thức Luận: Tri Thức Gián Tiếp (Parokṣa-Jñāna) Và Trực Giác Trực Tiếp (Aparokṣānubhūti)</h2>
+        <p class="paragraph">
+            Trong hệ thống siêu hình học và nhận thức luận Advaita Vedānta (Nhất nguyên vô biệt) do đại sư Śaṅkarācārya (Thương Yết La, 788–820) hệ thống hóa, câu hỏi về phương thức đạt đến sự bừng tỉnh giải thoát tối hậu (Mokṣa) đóng vai trò trung tâm của mọi sự tu tập<sup>10</sup>. Śaṅkarācārya phân định sắc nét hai cấp độ nhận thức luận tri thức: Parokṣa-jñāna (Tri thức Gián tiếp) và Aparokṣānubhūti / Aparokṣa-jñāna (Trực giác Trực tiếp / Trực giác Chân lý)<sup>11</sup>.
+        </p>
+
+        <!-- Diagram 1 -->
+        <div class="diagram-box">
+            <div class="diagram-title">Cấu Trúc Phân Tầng Nhận Thức Luận Trong Advaita Vedānta</div>
+            <div class="flow-node">
+                <div class="node-item">
+                    <span class="node-name">PAROKṢA-JÑĀNA (Tri thức gián tiếp)</span>
+                    <span class="node-desc">Qua suy luận, sách vở, nghe từ Thầy (Guru) → Chỉ biết VỀ Brahman (Như thấy khói biết có lửa)</span>
+                </div>
+                <div class="arrow-down">▼ (Đột phá Nhận thức luận)</div>
+                <div class="node-item" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.1);">
+                    <span class="node-name" style="color: #f472b6;">APAROKṢĀNUBHŪTI (Trực giác trực tiếp)</span>
+                    <span class="node-desc" style="color: #e9d5ff;">Trực nhận không qua trung gian Tâm trí/Giác quan → Trực tiếp LÀ Brahman (Aham Brahmāsmi)</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>a. Parokṣa-jñāna (Tri thức Gián tiếp qua suy luận và kinh văn)</h3>
+        <ul class="step-list">
+            <li><strong>Bản chất của Parokṣa-jñāna:</strong> Là dạng trí tuệ gián tiếp đạt được thông qua sự suy luận lý trí (Anumāna), đọc tụng nghiên cứu Thánh giáo kinh điển Upanishad hoặc lắng nghe lời khai thị từ Bậc Thầy tâm linh (Guru)<sup>11</sup>.</li>
+            <li><strong>Giới hạn của tri thức gián tiếp:</strong> Śaṅkarācārya ví Parokṣa-jñāna giống như việc một người nhìn thấy làn khói bốc lên đằng xa và suy luận rằng có ngọn lửa ở đó, hay việc một người đọc sách mô tả về vị ngọt của mật nọc mà chưa từng tự tay nếm thử. Tri thức gián tiếp Parokṣa có giá trị chuẩn bị tâm lý, định hướng tư duy và gạt bỏ hoài nghi sơ khởi, nhưng hoàn toàn không có khả năng triệt tiêu tận gốc bóng tối Vô minh (Avidyā) hay cởi bỏ sự trói buộc của Saṃsāra<sup>12</sup>.</li>
+        </ul>
+
+        <h3>b. Aparokṣānubhūti (Trực giác Chân lý Trực tiếp)</h3>
+        <ul class="step-list">
+            <li><strong>Bản chất của Aparokṣānubhūti (Immediate Direct Intuition / Darśana):</strong> Là dạng tri thức trực giác cứu cánh, nơi nhận thức bừng sáng trực tiếp hiện tiền mà không qua bất kỳ vật trung gian nào<sup>12</sup>.</li>
+            <li><strong>Không qua trung gian Giác quan hay Tâm trí:</strong> Nếu các loại hình nhận thức thông thường (Thế tục nhận thức) buộc phải nương qua sự tiếp xúc giữa Các giác quan (Indriya) và Đối tượng, được xử lý qua Tâm trí (Manas) và Trí năng phân biệt (Buddhi); thì Aparokṣānubhūti là sự bừng sáng trực giác vượt lên trên và đứng độc lập với mọi cơ năng nhận thức nhị nguyên<sup>13</sup>. Hành giả trực nhận ngay hiện tiền Bản thể Vũ trụ Nirguṇa Brahman không phải như một đối tượng bên ngoài để quan sát, mà như chính Bản tánh nguyên sơ hằng có của Chân ngã Ātman.</li>
+        </ul>
+
+        <!-- 1.2 -->
+        <h2>1.2. Cơ Chế Chiếu Soi Của Aparokṣānubhūti: Bóc Tách Pañca-Kośa, Đập Tan Adhyāsa Và Triệt Tiêu Cõi Mộng Vyāvahārika</h2>
+
+        <!-- Diagram 2 -->
+        <div class="diagram-box">
+            <div class="diagram-title">Cơ Chế Tác Động Của Trực Giác Aparokṣānubhūti</div>
+            <ul class="step-list" style="margin-bottom: 0;">
+                <li><strong>BÓC TÁCH NĂM LỚP VỎ (Pañca-kośa):</strong> Phủ định bóc tách Neti, Neti (Annamaya, Prāṇamaya...).</li>
+                <li><strong>ĐẬP TAN CƯỠNG GÁN (Adhyāsa):</strong> Xóa bỏ sự nhầm lẫn gán tưởng con rắn lên dây thừng.</li>
+                <li><strong>TRIỆT TIÊU MỘNG VYĀVAHĀRIKA:</strong> Cõi mộng huyễn giả (Māyā) lập tức bị triệt tiêu.</li>
+                <li><strong>TRỰC NHẬN CHÂN ĐẾ (Pāramārthika):</strong> Ngộ nhập "Aham Brahmāsmi", đạt Giải thoát Jīvanmukta.</li>
+            </ul>
+        </div>
+
+        <h3>a. Sự bóc tách năm lớp vỏ giả tạm (Pañca-kośa) qua phương pháp Neti, Neti</h3>
+        <p class="paragraph">
+            Sự bừng sáng của trực giác Aparokṣānubhūti vận hành thông qua quy trình phủ định bóc tách sắc bén Neti, Neti ("Không phải cái này, Không phải cái kia"): Hành giả cởi bỏ lớp vỏ thô thân vật thực (Annamaya-kośa), lớp vỏ sinh khí (Prāṇamaya-kośa), lớp vỏ tâm trí cảm xúc (Manomaya-kośa), lớp vỏ trí năng phân biệt (Vijñānamaya-kośa) và lớp vỏ hỷ lạc vi tế (Ānandamaya-kośa)<sup>11,14</sup>. Trực giác trực tiếp thẩm thấu rằng toàn bộ năm lớp vỏ này chỉ là những cấu trúc huyễn hóa (Māyā) bao bọc bên ngoài, tuyệt đối không phải là Chân ngã hằng tồn.
+        </p>
+
+        <h3>b. Đập tan cơ chế Cưỡng gán (Adhyāsa) và ẩn dụ "Sợi dây - Con rắn" (Rajju-Sarpa)</h3>
+        <ul class="step-list">
+            <li><strong>Cơ chế Adhyāsa:</strong> Bóng tối Vô minh Avidyā khiến tâm thức diễn ra sự cưỡng gán áp đặt điên đảo—lầm tưởng cõi hiện tượng sinh diệt Jagat và thể xác vật lý là Chân ngã<sup>11,14</sup>.</li>
+            <li><strong>Ẩn dụ Rajju-sarpa:</strong> Śaṅkarācārya ví cơ chế này như sự nhầm lẫn nhìn sợi dây thừng cuộn tròn (Rajju) gán tưởng thành con rắn độc (Sarpa) trong bóng chiều chạng vạng. Khi ngọn đèn Trí tuệ trực giác Aparokṣānubhūti bừng thắp, con rắn ảo giác lập tức biến mất mà không cần xua đuổi; cơ chế Adhyāsa bị đập tan, trả lại sợi dây thừng Bản thể nguyên vẹn.</li>
+        </ul>
+
+        <h3>c. Sự triệt tiêu cõi mộng Vyāvahārika và trạng thái Giải thoát đương sinh (Jīvanmukta)</h3>
+        <ul class="step-list">
+            <li><strong>Sự vô hiệu hóa cõi mộng thế tục:</strong> Khi trực giác Aparokṣānubhūti hiển lộ, tầng thực tại Tục đế Vyāvahārika bị triệt tiêu hoàn toàn (Badhita) về mặt bản thể<sup>12,15</sup>. Cõi đời đa dạng sinh diệt lộ rõ bản chất huyễn mộng (Vivarta).</li>
+            <li><strong>Trực nhận mệnh đề Aham Brahmāsmi:</strong> Hành giả ngộ nhập mệnh đề đại ngôn kinh điển: Aham Brahmāsmi ("Ta chính là Brahman"), đạt trạng thái Giải thoát đương sinh (Jīvanmukta)—sống an nhiên tự tại, đứng ngoài cõi kịch Līlā như một chứng nhân tĩnh lặng (Sākṣin)<sup>13,15</sup>.</li>
+        </ul>
+
+        <!-- 1.3 -->
+        <h2>1.3. Bảng So Sánh Cấp Độ Nhận Thức Luận Trong Advaita Vedānta</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tiêu chí Nhận thức</th>
+                        <th>Tri Thức Gián Tiếp (Parokṣa-jñāna)</th>
+                        <th>Trực Giác Trực Tiếp (Aparokṣānubhūti)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phương thức Tiếp nhận</strong></td>
+                        <td>Qua suy luận lý trí (Anumāna), sách vở, nghe Thầy.</td>
+                        <td>Trực nhận trực tiếp hiện tiền, không qua trung gian.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vai trò Cơ năng Tâm trí</strong></td>
+                        <td>Phụ thuộc vào Giác quan (Indriya) và Tâm trí (Manas).</td>
+                        <td>Vượt lên trên và đứng độc lập với ý thức nhị nguyên.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trạng thái Khai phóng</strong></td>
+                        <td>Chỉ biết VỀ Brahman (Khái niệm hóa Thực tại).</td>
+                        <td>Trực tiếp LÀ Brahman (Đồng nhất Bất nhị).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Khả năng Chuyển hóa</strong></td>
+                        <td>Giúp gạt bỏ hoài nghi, chưa diệt tận Avidyā.</td>
+                        <td>Đập tan Adhyāsa, triệt tiêu cõi mộng Vyāvahārika.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đích đến Cứu cánh</strong></td>
+                        <td>Bậc tiền đề chuẩn bị cho hành trình tu tập.</td>
+                        <td>Đạt Giải thoát đương sinh (Jīvanmukta).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FOOTNOTES SECTION -->
+        <div class="footnotes">
+            <div class="footnotes-header">CHÚ THÍCH & TRÍCH DẪN NGUỒN (CHƯƠNG 1)</div>
+
+            <div class="footnote-item">
+                <span class="num">10.</span> Lê Xuân Khoa (1972), <em>Nhập môn Triết học Ấn Độ</em>, NXB Trung tâm Học liệu Bộ Giáo dục, Sài Gòn, tr. 185–192; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3] & "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">11.</span> Śaṅkarācārya, <em>Brahmasūtra-bhāṣya</em> (Chú giải Kinh Brahma), Adhyāya 1, Pāda 1; xem thêm Swami Gambhirananda (dịch) (1965), <em>Brahma Sutra Bhasya of Shankaracharya</em>, Advaita Ashrama, Kolkata, tr. 14–25; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94, 95] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">12.</span> Śaṅkarācārya, <em>Aparokṣānubhūti</em> (Trực giác Chân lý Trực tiếp), bản dịch tiếng Anh của Swami Vimuktananda (1938), Advaita Ashrama, Kolkata; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 89, 90, 94, 95] & "3. Buổi học ngày 21-9-2026.mp3" [passage 210, 218].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">13.</span> Radhakrishnan, S. (1999), <em>Indian Philosophy</em>, Vol. 2, Oxford University Press, New Delhi, tr. 480–495; đối chiếu bài giảng "2. Buổi học ngày 16-9-2026.mp3" [passage 89, 90] & "3. Buổi 3 (ngày 31-3-2026).mp3" [passage 196, 232].
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">14.</span> Swami Nikhilananda (trans.) (1949), <em>The Mandukya Upanishad with Gaudapada's Karika and Sankara's Commentary</em>, Sri Ramakrishna Math, Chennai; đối chiếu bài giảng "2. Buổi 2 (ngày 18-01-2026).mp3" [passage 94, 95, 98, 99] (Giải phẫu khái niệm trực giác trực tiếp Aparokṣa, cơ chế Adhyāsa và sự thức tỉnh Jñāna).
+            </div>
+
+            <div class="footnote-item">
+                <span class="num">15.</span> Viện Triết học (2004), <em>Lịch sử Triết học Phương Đông</em>, NXB Chính trị Quốc gia, Hà Nội, tr. 312–318; đối chiếu bài giảng "1. Buổi 1 (18-01-2026).mp3" [passage 3] & "2. Buổi học ngày 16-9-2026.mp3" [passage 89, 90, 146].
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const starsContainer = document.getElementById('stars');
+        const starCount = 120;
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            const size = Math.random() * 2.5 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            
+            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            star.style.animationDelay = `${Math.random() * 3}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+</html>
